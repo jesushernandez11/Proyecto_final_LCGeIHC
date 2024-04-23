@@ -1,0 +1,15 @@
+﻿  Window.cpp
+C:\Users\jesus\Documents\Compu grafica\Practicas\Practica7\Practica7\Window.h(12,36): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Window.cpp")
+  
+C:\Users\jesus\Documents\Compu grafica\Practicas\Practica7\Practica7\Window.h(13,37): warning C4244: 'return': conversión de 'GLint' a 'GLfloat'; posible pérdida de datos
+  (compilando archivo de origen "Window.cpp")
+  
+C:\Users\jesus\Documents\Compu grafica\Practicas\Practica7\Practica7\Window.cpp(157,22): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\jesus\Documents\Compu grafica\Practicas\Practica7\Practica7\Window.cpp(158,22): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\jesus\Documents\Compu grafica\Practicas\Practica7\Practica7\Window.cpp(162,28): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\jesus\Documents\Compu grafica\Practicas\Practica7\Practica7\Window.cpp(163,40): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\jesus\Documents\Compu grafica\Practicas\Practica7\Practica7\Window.cpp(165,21): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\jesus\Documents\Compu grafica\Practicas\Practica7\Practica7\Window.cpp(166,21): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\jesus\Documents\Compu grafica\Practicas\Practica7\Practica7\Window.cpp(75,1): warning C4715: 'Window::Initialise': no todas las rutas de acceso de control devuelven un valor
+  Practica7.vcxproj -> C:\Users\jesus\Documents\Compu grafica\Practicas\Practica7\Debug\Practica7.exe
