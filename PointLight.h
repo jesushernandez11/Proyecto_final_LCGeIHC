@@ -6,10 +6,17 @@ class PointLight :
 {
 public:
 	PointLight();
+	
 	PointLight(GLfloat red, GLfloat green, GLfloat blue,
 		GLfloat aIntensity, GLfloat dIntensity,
-		GLfloat xPos, GLfloat yPos, GLfloat zPos, //posición
-		GLfloat con, GLfloat lin, GLfloat exp);  //atenuación
+		GLfloat xPos, GLfloat yPos, GLfloat zPos,
+		GLfloat con, GLfloat lin, GLfloat exp);
+
+	/*PointLight(GLuint shadowWidth, GLuint shadowHeight,
+		GLfloat red, GLfloat green, GLfloat blue,
+		GLfloat aIntensity, GLfloat dIntensity,
+		GLfloat xPos, GLfloat yPos, GLfloat zPos,
+		GLfloat con, GLfloat lin, GLfloat exp);*/
 
 	void UseLight(GLfloat ambientIntensityLocation, GLfloat ambientcolorLocation,
 		GLfloat diffuseIntensityLocation, GLfloat positionLocation,
