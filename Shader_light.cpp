@@ -1,4 +1,7 @@
 #include "Shader_light.h"
+#include <glm.hpp>
+#include <gtc\matrix_transform.hpp>
+#include <gtc\type_ptr.hpp>
 
 Shader::Shader()
 {
@@ -207,6 +210,12 @@ void Shader::SetDirectionalLight(DirectionalLight * dLight)
 		uniformDirectionalLight.uniformDiffuseIntensity, uniformDirectionalLight.uniformDirection);
 }
 
+//SE AGREGO
+void Shader::setDirectionalLightTransform(glm::mat4* lTransform)
+{
+	glUniformMatrix4fv(uniformDirectionalLightTransform, 1, GL_FALSE, glm::value_ptr(*lTransform));
+}
+
 void Shader::SetPointLights(PointLight * pLight, unsigned int lightCount)
 {
 	if (lightCount > MAX_POINT_LIGHTS) lightCount = MAX_POINT_LIGHTS;
@@ -283,6 +292,21 @@ void Shader::AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderT
 	}
 
 	glAttachShader(theProgram, theShader);
+}
+//Se agrego
+void Shader::validate()
+{
+	GLint result = 0;
+	GLchar eLog[1024] = { 0 };
+
+	glValidateProgram(shaderID);
+	glGetProgramiv(shaderID, GL_VALIDATE_STATUS, &result);
+	if (!result)
+	{
+		glGetProgramInfoLog(shaderID, sizeof(eLog), NULL, eLog);
+		printf("Error validating program: '%s'\n", eLog);
+		return;
+	}
 }
 
 Shader::~Shader()
