@@ -5,21 +5,21 @@ class SpotLight :
 {
 public:
 	SpotLight();
-
+	
 	SpotLight(GLfloat red, GLfloat green, GLfloat blue,
 		GLfloat aIntensity, GLfloat dIntensity,
 		GLfloat xPos, GLfloat yPos, GLfloat zPos,
-		GLfloat xDir, GLfloat yDir, GLfloat zDir, //Propio vector de posición
+		GLfloat xDir, GLfloat yDir, GLfloat zDir,
 		GLfloat con, GLfloat lin, GLfloat exp,
-		GLfloat edg); //ángulo de apertura
+		GLfloat edg);
 
 	void UseLight(GLuint ambientIntensityLocation, GLuint ambientColourLocation,
 		GLuint diffuseIntensityLocation, GLuint positionLocation, GLuint directionLocation,
 		GLuint constantLocation, GLuint linearLocation, GLuint exponentLocation,
 		GLuint edgeLocation);
 
-	void SetFlash(glm::vec3 pos, glm::vec3 dir); //cambia posición y dirección en tiempo de ejecución (spotlight)
-	void SetPos(glm::vec3 pos); //se cambia en tiempo de ejecución (puntual)
+	void SetFlash(glm::vec3 pos, glm::vec3 dir); //Modificas la posicion y la direccion como la de las linternas
+	void SetPos(glm::vec3 pos); //como las luces de los focos
 	~SpotLight();
 
 private:
