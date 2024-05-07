@@ -1,0 +1,65 @@
+# Blender 3.6.10 MTL File: 'None'
+# www.blender.org
+
+newmtl Fire
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd fluid.png
+map_Ks spec-fluid.png
+map_Bump -bm 2.000000 normals-fluid.png
+
+newmtl balloon
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd balloon.png
+map_Ks specular.png
+map_Bump -bm 0.600000 normals.png
+
+newmtl branch
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.138432 0.181164 0.030713
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl metal
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd pot.png
+map_Ks pot-specular.png
+map_Bump -bm 0.200000 pot-normals.png
+
+newmtl smoke
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl wires
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
