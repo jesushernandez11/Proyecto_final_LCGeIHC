@@ -35,6 +35,9 @@ public:
 	void SetDirectionalLight(DirectionalLight * dLight);
 	void SetPointLights(PointLight * pLight, unsigned int lightCount);
 	void SetSpotLights(SpotLight * sLight, unsigned int lightCount);
+	void setDirectionalLightTransform(glm::mat4* lTransform);
+	//Se agrego
+	void validate();
 
 	void UseShader();
 	void ClearShader();
@@ -46,7 +49,8 @@ private:
 	int spotLightCount;
 	GLuint shaderID, uniformProjection, uniformModel, uniformColor, uniformView, uniformEyePosition,
 		uniformSpecularIntensity, uniformShininess;
-
+	// shadow uniforms
+	GLuint uniformTexture, uniformDirectionalLightTransform, uniformDirectionalShadowMap;
 	struct {
 		GLuint uniformcolor;
 		GLuint uniformAmbientIntensity;

@@ -18,13 +18,15 @@ typedef struct _VertexColor {
 	_VertexColor() {
 	}
 
-	_VertexColor(glm::vec3 position, glm::vec3 color) {
+	_VertexColor(glm::vec3 position, glm::vec3 color, glm::vec3 normal) {
 		this->position = position;
 		this->color = color;
+		this->normal = normal;
 	}
 
 	glm::vec3 position;
 	glm::vec3 color;
+	glm::vec3 normal; // Añadir este miembro para las normales
 } VertexColor;
 
 //typedef struct _VertexLightColor {

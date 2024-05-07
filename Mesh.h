@@ -14,7 +14,7 @@ public:
 	~Mesh();
 
 private:
-	GLuint VAO, VBO, IBO;
+	GLuint VAO, VBO, IBO, texBO; // Agrega texBO para manejar el buffer de coordenadas de textura
 	GLsizei indexCount;
 };
 

@@ -4,7 +4,7 @@
 
 SpotLight::SpotLight() : PointLight()
 {
-	direction = glm::vec3(0.0f, -1.0f, 0.0f);
+	direction = glm::vec3(0.0f, -1.0f, 0.0f); //y negativo la luz va de arriba hacia abajo
 	edge = 0.0f;
 	procEdge = cosf(glm::radians(edge));
 }
