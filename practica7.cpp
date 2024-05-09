@@ -98,6 +98,33 @@ Model Area1_M;
 Model Moto_M;
 Model RuedaMotoTrasera_M;
 Model RuedaMotoFrontal_M;
+Model Auto_M;
+Model RuedaAutoIzquierdaFrente_M;
+Model RuedaAutoIzquierdaAtras_M;
+Model RuedaAutoDerechaFrente_M;
+Model RuedaAutoDerechaAtras_M;
+//Model pasillo;
+Model concierto;
+Model festival;
+Model puesto1;
+Model puesto2;
+Model puesto3;
+Model zona1;
+Model rampa;
+Model cancha;
+//Modelos personajes
+Model zero;
+Model parking;
+Model monarca_Cuerpo;
+Model monarca_Derecha;
+Model monarca_Izquierda;
+Model descanso;
+Model casa;
+Model casa_jack;
+Model jack;
+Model sally;
+Model fantasma;
+Model gato;
 
 Skybox skybox;
 Skybox skyboxNoche;
@@ -644,7 +671,54 @@ int main()
 	RuedaMotoTrasera_M.LoadModel("Models/AyaYMoto_RuedaTrasera.obj");
 	RuedaMotoFrontal_M = Model();
 	RuedaMotoFrontal_M.LoadModel("Models/AyaYMoto_RuedaFrontal.obj");
-
+	Auto_M = Model();
+	Auto_M.LoadModel("Models/auto.obj");
+	RuedaAutoIzquierdaFrente_M = Model();
+	RuedaAutoIzquierdaFrente_M.LoadModel("Models/LlantaAutoIzquierdaFrente.obj");
+	RuedaAutoIzquierdaAtras_M = Model();
+	RuedaAutoIzquierdaAtras_M.LoadModel("Models/LlantaAutoIzquierdaAtras.obj");
+	RuedaAutoDerechaFrente_M = Model();
+	RuedaAutoDerechaFrente_M.LoadModel("Models/LlantaAutoDerechaFrente.obj");
+	RuedaAutoDerechaAtras_M = Model();
+	RuedaAutoDerechaAtras_M.LoadModel("Models/LlantaAutoDerechaAtras.obj");
+	//pasillo = Model();
+	//pasillo.LoadModel("Models/pasilloCruz.obj");
+	concierto= Model();
+	concierto.LoadModel("Models/escenario.obj");
+	festival = Model();
+	festival.LoadModel("Models/festival.obj");
+	festival = Model();
+	festival.LoadModel("Models/festival.obj");
+	puesto1 = Model();
+	puesto1.LoadModel("Models/puesto1.obj");
+	puesto2 = Model();
+	puesto2.LoadModel("Models/puesto2.obj");
+	puesto3 = Model();
+	puesto3.LoadModel("Models/puesto3.obj");
+	zero = Model();
+	zero.LoadModel("Models/zero.obj");
+	rampa = Model();
+	rampa.LoadModel("Models/rampas.obj");
+	cancha = Model();
+	cancha.LoadModel("Models/cancha.obj");
+	//parking = Model();
+	//parking.LoadModel("Models/parking.obj");
+	monarca_Cuerpo = Model();
+	monarca_Cuerpo.LoadModel("Models/cuerpoMariposa.obj");
+	monarca_Derecha = Model();
+	monarca_Derecha.LoadModel("Models/AlaDerechaMariposa.obj");
+	monarca_Izquierda = Model();
+	monarca_Izquierda.LoadModel("Models/AlaIzquierdaMariposa.obj");
+	//Mas zonas
+	descanso = Model();
+	descanso.LoadModel("Models/zona_descanso.obj");
+	casa = Model();
+	casa.LoadModel("Models/bosque.obj");
+	casa_jack = Model();
+	casa_jack.LoadModel("Models/casa_jack.obj");
+	//Personajes
+	jack = Model();
+	jack.LoadModel("Models/jack.obj");
 
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/satelite-izquierda.tga");//
@@ -707,13 +781,13 @@ int main()
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
 	//*************Luz se prende y apaga por medio dealgún ciclo automático ************************
-	//Declaración de la nariz de zero
+	//Declaración luces del escenario
 	unsigned int pointLightCount2 = 0;
-	pointLights2[0] = PointLight(1.0f, 1.0f, 1.0f, //Color rojo
+	pointLights2[0] = PointLight(1.0f, 0.7f, 0.0f, //Color naranja
 		5.0f, 3.0f, //Luz ambiental y difusa
-		-1.0f, 1.5f, 35.0f, //POS
+		70.0f, 12.0f, -40.0f, //POS
 		0.3f, 0.2f, 0.1f); //intensidad
-	pointLightCount2++;
+	pointLightCount2++; //(70.0f, 0.0f, -40.0) 
 
 	unsigned int spotLightCount = 0;
 	//linterna
@@ -735,6 +809,7 @@ int main()
 	//DirectionalLight sun(1.0f, 1.0f, 1.0f, 0.5f, 0.3f, 1.0f, -1.0f, 0.0f);
 	float tiempoA = 5.0f; //Variable para animacion
 	float tiempoC = 10.0f; //Variable para animacion compleja
+	float espiral_time = 5.0f; // Inicializar el temporizador en 5 segundos
 	//Creando motor de audio para que permita audio 3d (posicional)
 	ISoundEngine* engine1 = createIrrKlangDevice();
 	if (!engine1)
@@ -747,7 +822,7 @@ int main()
 	const char* soundPath = "D:/COMPU GRAFICA/Proyecto/Proyecto/Proyecto/media/La Obsesion De Jack.mp3";
 
 	// Posición del sonido en el espacio (coordenadas x, y, z)
-	vec3df soundPosition(-1.0f, 0.0f, 25.0f); // Cambia estas coordenadas según necesites
+	vec3df soundPosition(75.0f, 0.0f, -130.0f); // Cambia estas coordenadas según necesites
 
 	// Cargar el sonido
 	ISoundSource* soundSource = engine1->addSoundSourceFromFile(soundPath);
@@ -802,6 +877,18 @@ int main()
 	float wheelieAngle = 0.0f; // Ángulo de inclinación de la moto
 	bool isWheelie = false; // Indica si se está haciendo el wheelie
 	float timeElapsed = 0.0f; // Tiempo transcurrido
+	float LlantasMoto = 0.0f; //Variable para el movimiento de las llantas correspondiemte a la moto
+	//Vairables para el auto
+	float radioAuto = 15.0f; // Radio del círculo
+	float velocidadAngular = 0.2f; // Velocidad angular
+	//Variables
+	float Espiralx = 0.0f;
+	float Espiraly = 0.0f;
+	float Espiralz = 0.0f; // Controla la altura de la espiral
+	//Variables para animacion alas y mov de mariposa
+	float MonarcaAngle = 0.0f;
+	float velocidadMonarca = 0.0f;
+	float tiempoTranscurridoMonarca = 1.1f;
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -896,7 +983,7 @@ int main()
 			// Reiniciar el temporizador a 5 segundos
 			luz_timer = 5.0f;
 		}
-		/*************************************************** ANIMACIONES BASICA
+		/*************************************************** ANIMACIONES BASICAS
 		***************************************************/
 		// Simular movimiento de caminata del avatar
 		tiempoA -= deltaTime;
@@ -955,29 +1042,29 @@ int main()
 			// Reiniciar el temporizador a 5 segundos
 			tiempoA = 15.0f;
 		}
+
+		tiempoTranscurridoMonarca += deltaTime; // Actualizar el tiempo transcurrido
+
+		// Si ha pasado un segundo, actualizamos el ángulo de la mariposa y su posición en Y
+		if (tiempoTranscurridoMonarca >= 1.0f) {
+			// Alternar entre -45 y 45 grados
+			if (MonarcaAngle == 45.0f) {
+				MonarcaAngle = -45.0f;
+				velocidadMonarca += 1.0f;
+			}
+			else {
+				MonarcaAngle = 45.0f;
+				velocidadMonarca += 1.0f;
+			}
+
+			// Invertir la dirección de movimiento cada vez que cambiamos de ángulo
+			velocidadMonarca *= -1.0f;
+
+			tiempoTranscurridoMonarca = 0.0f; // Reiniciar el tiempo transcurrido
+		}
+
 		/*************************************************** ANIMACIONES COMPLEJAS
 		***************************************************/
-		//Animacion para el movimiento del globo aerostatico
-		/*tiempoC -= deltaTime;
-		if (tiempoC <= 0.0f)
-		{
-			bandera = !bandera;
-
-			if (bandera)
-			{
-				
-				// Calcula la altura del globo utilizando la función seno
-				float altura = amplitud_ascenso * sin(frecuencia_ascenso * glfwGetTime() + fase_ascenso);
-			}
-			else
-			{
-				
-			}
-			// Reiniciar el temporizador a 20 segundos
-			tiempoC = 20.0f;
-		}
-	
-*/
 
 		// Animacion del globo aerostatico que hace que el globo suba y baje
 		float altura = 0.0f;
@@ -995,28 +1082,28 @@ int main()
 		// Incrementa el ángulo para la próxima iteración
 		angulo += velocidad_rotacion * deltaTime;
 
-		//Agregando animacion de la moto
 		// Actualizar el tiempo transcurrido
 		timeElapsed += 0.016f; // Aprox. 60 FPS
 
-		// Avanzar hacia adelante durante los primeros 15 segundos
-		if (timeElapsed <= 15.0f) {
+		// Avanzar hacia adelante durante los primeros 5 segundos
+		if (timeElapsed <= 5.0f) {
 			motorcycleX += 0.1f;
+			LlantasMoto += 10.0f;
 		}
-		// Hacer el wheelie gradualmente después de los primeros 15 segundos
-		else if (timeElapsed <= 30.0f) {
+		// Mantener el wheelie durante 10 segundos
+		else if (timeElapsed <= 16.0f) {
 			isWheelie = true;
-			wheelieAngle += 0.5f;
-			wheelieAngle = std::min(45.0f, wheelieAngle); // Limitar el ángulo de wheelie
+			wheelieAngle += 1.25f;
+			wheelieAngle = std::min(15.0f, wheelieAngle); // Limitar el ángulo de wheelie
 			motorcycleX += 0.1f; // Avanzar hacia adelante durante el wheelie
 		}
-		// Decrementar el wheelie después de los primeros 30 segundos
-		else if (timeElapsed <= 45.0f) {
-			wheelieAngle -= 0.5f;
+		// Bajar el wheelie durante 4 segundos
+		else if (timeElapsed <= 19.0f) {
+			wheelieAngle -= 0.5f; // Incremento más grande para bajar más rápido
 			wheelieAngle = std::max(0.0f, wheelieAngle); // Limitar el ángulo de wheelie
 			motorcycleX += 0.1f; // Avanzar hacia adelante mientras se baja el wheelie
 		}
-		// Volver a la posición inicial después de 45 segundos
+		// Volver a la posición inicial después de 19 segundos
 		else {
 			motorcycleX = 0.0f;
 			wheelieAngle = 0.0f;
@@ -1024,30 +1111,68 @@ int main()
 			timeElapsed = 0.0f; // Reiniciar el tiempo
 		}
 
+		float tiempoAuto = glfwGetTime(); // Tiempo en segundos
+		float posX = radioAuto * cos(velocidadAngular * tiempoAuto);
+		float posZ = radioAuto * sin(velocidadAngular * tiempoAuto);
+
+		// Iterar a través de un rango de parámetro t
+		/*for (float t = 0.0f; t <= 10.0f * M_PI; t += 0.1f) {
+			// Calcular las coordenadas (x, y, z) en función del parámetro t
+			Espiralx = t * cos(t);
+			Espiraly = t * sin(t);
+			Espiralz = 0.1f * t; // Controla la altura de la espiral
+		}*/
+
+		// Actualizar el temporizador
+		espiral_time -= deltaTime;
+
+		// Si el temporizador llega a cero o menos, cambiar el estado de la luz y reiniciar el temporizador
+		if (espiral_time <= 0.0f)
+		{
+			//luz_encendida = !luz_encendida;
+			 // Parámetro de tiempo
+			static float t = 0.0f;
+
+			// Definir el radio de la espiral y la velocidad angular
+			float radius = 1.0f;
+			float angularSpeed = 0.05f;
+
+			// Calcular las coordenadas en espiral en función del tiempo
+			Espiralx = radius * cos(t);
+			Espiraly = radius * sin(t);
+			Espiralz = 0.1f * t; // Controla la altura de la espiral
+
+			// Incrementar el tiempo para avanzar en la animación
+			t += angularSpeed;
+		}
+
 		glm::mat4 model(1.0);
 		glm::mat4 model1(1.0); //Matriz para el avatar
 		glm::mat4 modelaux(1.0); //Matriz auxiliar para el avatar
 		glm::mat4 model2(1.0); //Matriz para la moto
 		glm::mat4 modelaux2(1.0); //Matriz auxiliar para el avatar
+		glm::mat4 model3(1.0); //Matriz para el auto
+		glm::mat4 modelaux3(1.0); //Matriz auxiliar para el auto
+		glm::mat4 modelPasillo(1.0);
+		glm::mat4 modelConcierto(1.0);
+		glm::mat4 modelComida(1.0);
+		glm::mat4 modelPersonajes(1.0);
+		glm::mat4 modelCancha(1.0);
+		glm::mat4 modelHojas(1.0);
+		glm::mat4 modelDescanso(1.0); //Matriz para otra zona
+		glm::mat4 modelaux4(1.0); //Matriz auxiliar para mariposa
+		glm::mat4 modelPersonajesExtraño(1.0); //Matriz para personajes
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(30.0f, 1.0f, 30.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 1.0f, 20.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 
 		pisoTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
-
-
-		//Lampara
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-1.0f, 1.0f, 25.0));
-		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Lampara.RenderModel();
 
 		//Modelo Planta Tipo Extraño mundo de jack
 		model = glm::mat4(1.0);
@@ -1072,81 +1197,243 @@ int main()
 
 		//Modelo Resbaladilla
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(18.0f, 0.0f, 5.0));
+		model = glm::translate(model, glm::vec3(-90.0f, 0.0f, -70.0));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Resbaladilla_M.RenderModel();
 
-		//Modelo Gira
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(28.0f, 0.0f, 15.0));
-		//model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		GiraGira_M.RenderModel();
-
 		//Modelo Sube y Baja
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(28.0f, 0.0f, 35.0));
-		//model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+		//model = glm::translate(model, glm::vec3(-33.5f, 1.5f, -98.0));
+		model = glm::translate(model, glm::vec3(-65.0f, 1.5f, -65.0));
+		//model = glm::scale(model, glm::vec3(3.1f, 3.1f, 3.1f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		SubeBaja_M.RenderModel();
 
 		//Modelo Area de juegos
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(40.0f, 0.0f, 35.0));
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -40.0));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Area1_M.RenderModel();
 
+		//Modelo Zona descanso
+		modelDescanso = glm::mat4(1.0);
+		modelDescanso = glm::translate(modelDescanso, glm::vec3(-67.0f, -1.0f, -125.0));
+		modelDescanso = glm::scale(modelDescanso, glm::vec3(6.1f, 6.1f, 6.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelDescanso));
+		descanso.RenderModel();
+
+		//Modelo Zona bosque
+		modelDescanso = glm::mat4(1.0);
+		modelDescanso = glm::translate(modelDescanso, glm::vec3(70.0f, 0.0f, -125.0));
+		modelDescanso = glm::scale(modelDescanso, glm::vec3(2.1f, 2.1f, 2.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelDescanso));
+		casa.RenderModel();
+
+		//Modelo jack
+		modelPersonajesExtraño = glm::mat4(1.0);
+		modelPersonajesExtraño = glm::translate(modelPersonajesExtraño, glm::vec3(75.0f, 0.0f, -130.0));
+		modelPersonajesExtraño = glm::scale(modelPersonajesExtraño, glm::vec3(1.1f, 1.1f, 1.1f));
+		//modelPersonajes = glm::scale(modelPersonajes, glm::vec3(0.1f, 0.1f, 0.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelPersonajesExtraño));
+		jack.RenderModel();
+
+		//modelDescanso = glm::translate(modelDescanso, glm::vec3(50.0f, 0.0f, -115.0)); pos para jack
+		//Modelo Casa jack
+		modelDescanso = glm::mat4(1.0);
+		modelDescanso = glm::translate(modelDescanso, glm::vec3(-5.0f, 20.0f, -175.0));
+		modelDescanso = glm::scale(modelDescanso, glm::vec3(4.1f, 4.1f, 4.1f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelDescanso));
+		casa_jack.RenderModel();
+
+		//Modelo rampa
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-40.0f, 0.0f, -14.0));
+		//modelComida = glm::rotate(model, -190.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(50.0f, 50.0f, 50.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		rampa.RenderModel();
+
+		//Modelo Concierto
+		modelConcierto = glm::mat4(1.0);
+		modelConcierto = glm::translate(modelConcierto, glm::vec3(70.0f, 0.0f, -25.0));
+		modelConcierto = glm::rotate(modelConcierto, -190.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelConcierto = glm::scale(modelConcierto, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelConcierto));
+		concierto.RenderModel();
+
+		//Modelo Zona comida
+		modelComida = glm::mat4(1.0);
+		modelComida = glm::translate(modelComida, glm::vec3(70.0f, 1.0f, 43.0));
+		//modelComida = glm::rotate(modelComida, -190.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelConcierto = glm::scale(modelConcierto, glm::vec3(30.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelComida));
+		festival.RenderModel();
+
+		//Modelo Zero
+		modelPersonajes = glm::mat4(1.0);
+		modelPersonajes = glm::translate(modelPersonajes, glm::vec3(-70.0f + Espiralx, 3.5f + Espiralx, 43.0 + Espiralz));
+		//modelPersonajes = glm::rotate(modelPersonajes, -190.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		//modelConcierto = glm::scale(modelConcierto, glm::vec3(30.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelPersonajes));
+		zero.RenderModel();
+		//modelHojas
+
+		//Modelo Mariposa Monarca
+		modelHojas = glm::mat4(1.0);
+		modelHojas = glm::translate(modelHojas, glm::vec3(0.0f, 0.0f + velocidadMonarca * deltaTime, 0.0f));
+		//-65.0f, 1.5f, -65.0
+		modelHojas = glm::scale(modelHojas, glm::vec3(1.0f, 1.0f, 1.0f));
+		modelaux4 = modelHojas; //lo que hereda
+		modelHojas = glm::translate(modelHojas, glm::vec3(-65.0f, 6.0f, -65.0));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelHojas));
+		monarca_Cuerpo.RenderModel();
+		modelHojas = modelaux4; //descarta lo que no hereda
+		//********************Ala Derecha
+		modelaux4 = modelHojas; //lo que hereda
+		modelHojas = glm::translate(modelHojas, glm::vec3(-65.1f, 6.0f, -65.0));
+		modelHojas = glm::rotate(modelHojas, glm::radians(MonarcaAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+		//modelHojas = glm::scale(modelHojas, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelHojas));
+		monarca_Derecha.RenderModel();
+		modelHojas = modelaux4; //descarta lo que no hereda
+		//********************Ala Izquierda
+		modelaux4 = modelHojas; //lo que hereda
+		modelHojas = glm::translate(modelHojas, glm::vec3(-65.2f, 6.0f, -65.0));
+		modelHojas = glm::rotate(modelHojas, glm::radians(MonarcaAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+		//modelHojas = glm::scale(modelHojas, glm::vec3(10.0f, 10.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelHojas));
+		monarca_Izquierda.RenderModel();
+		modelHojas = modelaux4; //descarta lo que no hereda
+
+		/*
+* Model concierto;
+Model festival;
+Model puesto1;
+Model puesto2;
+Model puesto3;
+Model zona1;
+	*/
+		/*
+		//Modelo para el pasillo de piedra
+		modelPasillo = glm::mat4(1.0);
+		modelPasillo = glm::translate(modelPasillo, glm::vec3(0.0f, 0.0f, 0.0));
+		//modelPasillo = glm::rotate(modelPasillo, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelPasillo = glm::scale(modelPasillo, glm::vec3(17.0f, 17.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelPasillo));
+		//pasillo.RenderModel();
+		*/
 		//Moto
 		model2 = glm::mat4(1.0);
-		model2 = glm::translate(model2, glm::vec3(0.0f, 0.0f, 0.0f +motorcycleX));
-		model2 = glm::rotate(model2, glm::radians(-wheelieAngle), glm::vec3(1.0f, 0.0f, 0.0f));
+		model2 = glm::translate(model2, glm::vec3(0.0f, 0.0f, 0.0f + motorcycleX));
+		model2 = glm::rotate(model2, glm::radians(wheelieAngle), glm::vec3(1.0f, 0.0f, 0.0f));
 		modelaux2 = model2; //lo que hereda
-		model2 = glm::translate(model2, glm::vec3(-1.0f, 1.0f, 30.0));
+		model2 = glm::translate(model2, glm::vec3(-40.0f, 1.0f, -80.0));
 		model2 = glm::scale(model2, glm::vec3(10.0f, 10.0f, 10.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model2));
 		Moto_M.RenderModel();
 		model2 = modelaux2; //descarta lo que no hereda
 		//********************Rueda Trasera
 		modelaux2 = model2; //lo que hereda
-		model2 = glm::translate(model2, glm::vec3(-1.4f, 0.0f, 30.0));
-		model2 = glm::scale(model2, glm::vec3(15.0f, 15.0f, 15.0f));
+		model2 = glm::translate(model2, glm::vec3(-40.0f, 0.0f, -81.0));
+		model2 = glm::rotate(model2, glm::radians(motorcycleX), glm::vec3(1.0f, 0.0f, 0.0f));
+		model2 = glm::scale(model2, glm::vec3(10.0f, 10.0f, 10.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model2));
 		RuedaMotoTrasera_M.RenderModel();
 		model2 = modelaux2; //descarta lo que no hereda
 		//********************Rueda Frontal
 		modelaux2 = model2; //lo que hereda
-		model2 = glm::translate(model2, glm::vec3(-1.4f, 0.0f, 37.0));
+		model2 = glm::translate(model2, glm::vec3(-40.0f, 0.0f, -74.0));
+		model2 = glm::rotate(model2, glm::radians(motorcycleX), glm::vec3(1.0f, 0.0f, 0.0f));
 		model2 = glm::scale(model2, glm::vec3(15.0f, 15.0f, 15.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model2));
 		RuedaMotoFrontal_M.RenderModel();
 		model2 = modelaux2; //descarta lo que no hereda
 
+		//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-**-*-*-**AUTO-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+		model3 = glm::mat4(1.0);
+		modelaux3 = model3; //lo que hereda
+		model3 = glm::translate(model3, glm::vec3(-60.0f, 1.0f, 130.0F)); //70.0f, 1.0f, 43.0
+		model3 = glm::translate(model3, glm::vec3(posX, 0.0f, posZ));
+		model = glm::rotate(model, -190.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+		model3 = glm::scale(model3, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model3));
+		Auto_M.RenderModel();
+		model3 = modelaux3; //descarta lo que no hereda
+		//**************** LLanta izquierda frente
+		modelaux3 = model3; //lo que hereda
+		model3 = glm::translate(model3, glm::vec3(-55.0f, 1.2f, 128.0));
+		model3 = glm::scale(model3, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model3));
+		RuedaAutoIzquierdaFrente_M.RenderModel();
+		model3 = modelaux3; //descarta lo que no hereda
+		//**************** LLanta izquierda trasera
+		modelaux3 = model3; //lo que hereda
+		model3 = glm::translate(model3, glm::vec3(-65.0f, 1.0f, 128.0));
+		model3 = glm::scale(model3, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model3));
+		RuedaAutoIzquierdaAtras_M.RenderModel();
+		model3 = modelaux3; //descarta lo que no hereda
+		//**************** LLanta derecha frente
+		modelaux3 = model3; //lo que hereda
+		model3 = glm::translate(model3, glm::vec3(-55.0f, 1.2f, 133.0));
+		model3 = glm::scale(model3, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model3));
+		RuedaAutoDerechaFrente_M.RenderModel();
+		model3 = modelaux3; //descarta lo que no hereda
+		//**************** LLanta derecha trasera
+		modelaux3 = model3; //lo que hereda
+		model3 = glm::translate(model3, glm::vec3(-65.0f, 1.0f, 133.0));
+		model3 = glm::scale(model3, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model3));
+		RuedaAutoDerechaAtras_M.RenderModel();
+		model3 = modelaux3; //descarta lo que no hereda
+
 		//Toroide Victoria Genis
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-1.0f, 3.0f, 27.0));
-		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(-73.0f, 10.0f, 33.3f));//-70.0f, 2.5f, 43.0
+		model = glm::rotate(model, 190.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 5.0f));
 		color = glm::vec3(0.7f, 0.6f, 0.5f);
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));//FALSE ES PARA QUE NO SEA TRANSPUESTA
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		canasta.UseTexture();
 		toroide_Vick.render();
+		//Repetimos el toroide
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-73.0f, 10.0f, 107.3f));//-70.0f, 2.5f, 43.0
+		model = glm::rotate(model, 190.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 5.0f));
+		color = glm::vec3(0.7f, 0.6f, 0.5f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));//FALSE ES PARA QUE NO SEA TRANSPUESTA
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		canasta.UseTexture();
+		toroide_Vick.render();
+
+		//Cancha
+		modelCancha = glm::mat4(1.0);
+		modelCancha = glm::translate(modelCancha, glm::vec3(-70.0f, 0.0f, 70.0));
+		//modelCancha = glm::rotate(modelCancha, 190.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+		modelCancha = glm::scale(modelCancha, glm::vec3(1.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelCancha));
+		cancha.RenderModel();
+
 		//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*JERARQUIA DEL AVATAR-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 		//**********************************Cuerpo del avatar
 		model1 = glm::mat4(1.0);
-		model1 = glm::translate(model1, cameraPosition + glm::vec3(0.0f, -6.0f, 0.0f));
+		//model1 = glm::translate(model1, cameraPosition + glm::vec3(0.0f, -6.0f, 0.0f));
 		// Obteniendo la dirección hacia adelante de la cámara
 		glm::vec3 cameraDirection = cameraManager.activeCamera->getCameraDirection();
 		
-		if (cameraDirection.z <= 0)
+		/*if (cameraDirection.z <= 0)
 		{
 			model1 = glm::rotate(model1, -1.0f * cameraDirection.x, glm::vec3(0.0f, 1.0f, 0.0f));
 			//printf("x: %f, y: %f, z: %f\n", cameraDirection.x, cameraDirection.y, cameraDirection.z);
 		}else if (cameraDirection.z > 0) {
 			model1 = glm::rotate(model1, 1.0f * cameraDirection.x + glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 			//printf("x: %f, y: %f, z: %f\n", cameraDirection.x, cameraDirection.y, cameraDirection.z);
-		}
+		}*/
 		// = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		//model1 = glm::rotate(model1, 180.0f, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model1; //lo que hereda
