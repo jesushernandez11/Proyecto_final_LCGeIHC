@@ -69,12 +69,6 @@ Texture brickTexture;
 Texture dirtTexture;
 Texture plainTexture;
 Texture pisoTexture;
-Texture AgaveTexture;
-
-//Texture 
-Texture uno;
-Texture logofiTexture;
-Texture moon;
 
 //Texturas para el avatar
 Texture cabeza;
@@ -715,8 +709,8 @@ int main()
 	rampa.LoadModel("Models/rampas.obj");
 	cancha = Model();
 	cancha.LoadModel("Models/cancha.obj");
-	//parking = Model();
-	//parking.LoadModel("Models/parking.obj");
+	parking = Model();
+	parking.LoadModel("Models/parking.obj");
 	monarca_Cuerpo = Model();
 	monarca_Cuerpo.LoadModel("Models/cuerpoMariposa.obj");
 	monarca_Derecha = Model();
@@ -735,6 +729,8 @@ int main()
 	jack.LoadModel("Models/jack.obj");
 	nave = Model();
 	nave.LoadModel("Models/nave.obj");
+	sally = Model();
+	sally.LoadModel("Models/sally.obj");
 
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/satelite-izquierda.tga");//
@@ -942,7 +938,7 @@ int main()
 	//Variables mave espacias
 	static float angleNave = 0.0f;
 	float posicionY = 0.0f;
-	float yVelocidad = 0.1f;
+	float yVelocidad = 1.0f;
 	////Loop mientras no se cierra la ventana
 	SonidoPisadas();
 
@@ -1227,6 +1223,7 @@ int main()
 		glm::mat4 modelDescanso(1.0); //Matriz para otra zona
 		glm::mat4 modelaux4(1.0); //Matriz auxiliar para mariposa
 		glm::mat4 modelPersonajesExtraño(1.0); //Matriz para personajes
+		glm::mat4 modelNave(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		model = glm::mat4(1.0);
@@ -1328,6 +1325,14 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelConcierto));
 		concierto.RenderModel();
 
+		//Model Sally
+		modelConcierto = glm::mat4(1.0);
+		modelConcierto = glm::translate(modelConcierto, glm::vec3(70.0f, 10.0f, -25.0));
+		modelConcierto = glm::rotate(modelConcierto, -190.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		//modelConcierto = glm::scale(modelConcierto, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelConcierto));
+		sally.RenderModel();
+
 		//Modelo Zona comida
 		modelComida = glm::mat4(1.0);
 		modelComida = glm::translate(modelComida, glm::vec3(70.0f, 1.0f, 43.0));
@@ -1371,6 +1376,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelHojas));
 		monarca_Izquierda.RenderModel();
 		modelHojas = modelaux4; //descarta lo que no hereda
+
 
 		/*
 		//Modelo para el pasillo de piedra
@@ -1450,13 +1456,20 @@ int main()
 
 		//-60.0f, 1.0f, 130.0
 		//Nave 
-		model = glm::mat4(1.0);
-		model = glm::translate(model3, glm::vec3(0.0f, posicionY, yVelocidad));
-		model1 = glm::translate(model3, glm::vec3(-60.0f, 15.0f, 145.0F)); //70.0f, 1.0f, 43.0
-		model = glm::rotate(model, glm::radians(angleNave), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		modelNave = glm::mat4(1.0);
+		//model = glm::translate(model3, glm::vec3(0.0f, posicionY, yVelocidad));
+		modelNave = glm::translate(modelNave, glm::vec3(5.0f, 35.0f + yVelocidad, 175.0F)); //70.0f, 1.0f, 43.0
+		modelNave = glm::rotate(modelNave, glm::radians(angleNave), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelNave = glm::scale(modelNave, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelNave));
 		nave.RenderModel();
+
+		//Parking
+		modelNave = glm::mat4(1.0);
+		modelNave = glm::translate(modelNave, glm::vec3(5.0f, 0.0f, 150.0f));
+		//modelNave = glm::scale(modelNave, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(modelNave));
+		parking.RenderModel();
 
 		//Toroide Victoria Genis -> Canasta de basquet
 		model = glm::mat4(1.0);
@@ -1625,7 +1638,6 @@ int main()
 		meshList[7]->RenderMesh();
 		//model = modelaux; //descarta lo que no hereda
 		//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* FIN DE LA JERARQUIA DEL AVATAR-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
-		
 
 		bool fogEnable = false;
 		// Define variables para los colores
@@ -1724,32 +1736,3 @@ int main()
 
 	return 0;
 }
-/*
-* //**************************-*-*-*-*--
-// Función para calcular la intensidad ambiental en función de la hora del día
-GLfloat calcularIntensidadAmbiental(int hour) {
-	// Ejemplo: aumentar la intensidad ambiental durante el día y disminuir durante la noche
-	if (hour >= 6 && hour <= 18) {
-		// Durante el día (de 6:00 a 18:00), intensidad ambiental más alta
-		return 0.8f;
-	}
-	else {
-		// Durante la noche, intensidad ambiental más baja
-		return 0.3f;
-	}
-}
-
-// Función para calcular la intensidad difusa en función de la hora del día
-GLfloat calcularIntensidadDifusa(int hour) {
-	// Ejemplo: intensidad difusa más baja durante la noche
-	if (hour >= 6 && hour <= 18) {
-		// Durante el día (de 6:00 a 18:00), intensidad difusa constante
-		return 0.8f;
-	}
-	else {
-		// Durante la noche, reducir la intensidad difusa
-		return 0.5f;
-	}
-}
-*/
-

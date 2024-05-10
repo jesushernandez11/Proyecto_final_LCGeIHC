@@ -36,6 +36,10 @@ public:
 	GLfloat getMouseX() { return lastX; }
 	GLfloat getMouseY() { return lastY; }
 	GLfloat getMouseCoord() { return screenX, screenY,0.0f; }
+	GLfloat getTecla7() { return is7Pressed; }
+	GLfloat getTecla8() { return is7Pressed; }
+	GLfloat getTeclaH() { return isHPressed; }
+	GLfloat getTecla5() { return 0; }
 	~Window();
 private: 
 	GLFWwindow *mainWindow;
@@ -66,6 +70,9 @@ private:
 	// Variables para el movimiento hacia adelante y hacia atrás
 	bool isOPressed = false;
 	bool isPPressed = false;
+	GLfloat is7Pressed = 0.0f;
+	GLfloat is8Pressed = 0.0f;
+	GLfloat isHPressed = 0.0f;
 	bool mouseFirstMoved;
 	//Variable para validar el cambio de camara
 	GLfloat valorCamara = 0.0f;

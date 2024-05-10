@@ -274,7 +274,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		//printf("se presiono la tecla %d'\n", key);
 	}
 	
-
+	
 	/*
 	bool terceraPersonaActiva = true; // Inicialmente activa la tercera persona
 
@@ -314,10 +314,28 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->valorCamara = 0.0f; // Devuelve 0 cuando se presiona la tecla 0
 	}
 		
-
-
-
-
+	if (key == GLFW_KEY_7 && action == GLFW_PRESS) {
+		theWindow->is7Pressed = 1.0f;
+		printf("1.0\n");
+	}
+	if (key == GLFW_KEY_8 && action == GLFW_PRESS) {
+		theWindow->is7Pressed = -1.0f;
+		printf("-1.0\n");
+	}
+	if (key == GLFW_KEY_H && action == GLFW_PRESS) {
+		theWindow->isHPressed = 1.0f;
+		printf("-1.0\n");
+	}
+	if (key == GLFW_KEY_5 && action == GLFW_PRESS) {
+		// Crear el motor de sonido(PISTA DE AUDIO CONTINUA)
+			ISoundEngine * engine4 = createIrrKlangDevice();
+		// Reproducir un archivo de música
+		ISound* sound4 = engine4->play3D("D:/COMPU GRAFICA/Proyecto/Proyecto/Proyecto/media/ambiente.wav",
+			vec3df(0, 0, 0), false, false, false);
+		// Bajar el volumen 
+		//sound4->setVolume(0.3f);
+	}
+	
 
 
 	/*Camera thirdPersonCamera, aerialCamera;
@@ -352,6 +370,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		}
 	}
 }
+
 
 void Window::ManejaMouse(GLFWwindow* window, double xPos, double yPos)
 {
